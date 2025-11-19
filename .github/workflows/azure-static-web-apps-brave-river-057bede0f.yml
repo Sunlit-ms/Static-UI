@@ -23,10 +23,6 @@ jobs:
         run: |
           ls -la
           test -f index.html && echo "index.html found at repo root" || echo "index.html not at root"
-
-        with:
-          submodules: true
-          lfs: false
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
       - name: Get Id Token

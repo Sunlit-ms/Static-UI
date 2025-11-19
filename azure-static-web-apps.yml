@@ -11,20 +11,24 @@ jobs:
   build_and_deploy:
     if: github.event_name != 'pull_request' || github.event.action == 'closed'
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Upload to Azure Static Web Apps
+      - name: Deploy static files (no build)
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           action: "upload"
-          # Your static site is in the repo root
+          # Your static site is at repo root
           app_location: "/"
-          # No build needed for plain HTML
+          # Skip any build entirely
           skip_app_build: true
-          # For plain HTML, the "artifact" is the same folder
+          # Publish the same folder as the artifact
           app_artifact_location: "/"
-          # Optional config file location
-          config_file_location: "/staticwebapp.config.json"
+          # Do not configure API for this maintenance page
+          skip_api_build: true
+          api_location: ""
+          # Optional: if you have a config file, otherwise remove this line
+          # config_file_location: "/staticwebapp.config.json"
